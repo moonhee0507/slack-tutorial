@@ -5,7 +5,10 @@ import { GeistSans } from "geist/font/sans"
 
 import "./globals.css"
 
+import { Toaster } from "sonner"
+
 import { ConvexClientProvider } from "@/components/convex-client-provider"
+import { Modals } from "@/components/modals"
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -21,7 +24,11 @@ export default function RootLayout({
     <ConvexAuthNextjsServerProvider>
       <html lang="en">
         <body className={GeistSans.className}>
-          <ConvexClientProvider>{children}</ConvexClientProvider>
+          <ConvexClientProvider>
+            <Toaster />
+            <Modals />
+            {children}
+          </ConvexClientProvider>
         </body>
       </html>
     </ConvexAuthNextjsServerProvider>
