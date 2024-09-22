@@ -8,6 +8,7 @@ import "./globals.css"
 import { Toaster } from "sonner"
 
 import { ConvexClientProvider } from "@/components/convex-client-provider"
+import { JotaiProvider } from "@/components/jotai-provider"
 import { Modals } from "@/components/modals"
 
 export const metadata: Metadata = {
@@ -25,9 +26,11 @@ export default function RootLayout({
       <html lang="en">
         <body className={GeistSans.className}>
           <ConvexClientProvider>
-            <Toaster />
-            <Modals />
-            {children}
+            <JotaiProvider>
+              <Toaster />
+              <Modals />
+              {children}
+            </JotaiProvider>
           </ConvexClientProvider>
         </body>
       </html>
