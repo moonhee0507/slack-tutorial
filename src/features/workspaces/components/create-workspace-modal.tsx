@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 
-import { useCreateWorkspace } from "../api/use-create-workspaces"
+import { useCreateWorkspace } from "../api/use-create-workspace"
 import { useCreateWorkspaceModal } from "../store/use-create-workspace-modal"
 
 export const CreateWorkspaceModal = () => {
