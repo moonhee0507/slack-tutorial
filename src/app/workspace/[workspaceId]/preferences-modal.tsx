@@ -17,6 +17,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
+import { useConfirm } from "@/hooks/use-confirm"
 
 interface PreferencesModalProps {
   open: boolean
@@ -31,6 +32,10 @@ export const PreferencesModal = ({
 }: PreferencesModalProps) => {
   const router = useRouter()
   const workspaceId = useWorkspaceId()
+  const [ConfirmDialog, confirm] = useConfirm(
+    "Are you sure?",
+    "This action is irreversible."
+  )
 
   const [value, setValue] = useState(initialValue)
   const [editOpen, setEditOpen] = useState(false)
@@ -40,7 +45,11 @@ export const PreferencesModal = ({
   const { mutate: removeWorkspace, isPending: isRemovingWorkspace } =
     useRemoveWorkspace()
 
-  const handleRemove = () => {
+  const handleRemove = async () => {
+    const ok = await confirm()
+
+    if (!ok) return;
+
     removeWorkspace(
       {
         id: workspaceId,
@@ -57,7 +66,7 @@ export const PreferencesModal = ({
     )
   }
 
-  const handleEdit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleEdit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
     updateWorkspace(
@@ -78,6 +87,8 @@ export const PreferencesModal = ({
   }
 
   return (
+    <>
+    <ConfirmDialog />
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="p-0 bg-gray-50  overflow-hidden">
         <DialogHeader className="p-4 border-b bg-white">
@@ -133,5 +144,6 @@ export const PreferencesModal = ({
         </div>
       </DialogContent>
     </Dialog>
+    </>
   )
 }
